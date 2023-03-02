@@ -2,8 +2,8 @@
     "name": "chat.dev-consumer",
     "version": "1.0.8",
     "description": "Connect to, and interact with, chat.dev",
-    "main": "index.js",
-    "types": "@types/index.d.ts",
+    "main": "./lib/index.js",
+    "types": "./lib/index.d.ts",
     "scripts": {
         "test": "npm run test",
         "clean": "rm -rf ./lib",
