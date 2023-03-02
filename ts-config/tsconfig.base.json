@@ -10,9 +10,7 @@
       "declarationMap": true,
       "allowSyntheticDefaultImports": true,
       "typeRoots": [
-        "./typings",
-        "./node_modules/@types/"
       ]
     },
-    "files": ["./src/index.ts"]
+    "files": ["./../src/index.ts"]
   }
