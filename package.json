@@ -1,6 +1,6 @@
 {
     "name": "chat.dev-consumer",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Connect to, and interact with, chat.dev",
     "main": "index.js",
     "scripts": {
