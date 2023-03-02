@@ -1,12 +1,18 @@
 {
     "extends": "./tsconfig.base.json",
     "compilerOptions": {
-      "target": "es5",
-      "module": "commonjs",
-      "declaration": true,
-      "outDir": "./lib",
-      "strict": true
+        "target": "es5",
+        "module": "commonjs",
+        "declaration": true,
+        "outDir": "./lib",
+        "strict": true
     },
-    "include": ["src", "examples"],
-    "exclude": ["node_modules", "**/__tests__/*"],
-  }
+    "include": [
+        "src",
+        "examples"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/__tests__/*"
+    ],
+}
