@@ -5,6 +5,7 @@ import { config } from "./config";
 interface RequestConfiguration {
     apiKey: string;
     origin?: string;
+    baseUrl?: string;
 }
 
 const defaultHeaders = (configuration: RequestConfiguration): Record<string, string> => {
@@ -29,7 +30,7 @@ export const fetcher = <T, BodyType = T>(
         axios.request({
             url,
             method,
-            baseURL: config.baseUrl,
+            baseURL: configuration.baseUrl ?? config.baseUrl,
             headers: defaultHeaders(configuration),
             withCredentials: true,
             validateStatus: function (status: number) {

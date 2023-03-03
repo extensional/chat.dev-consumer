@@ -1,7 +1,11 @@
-import { BotApi, BotData, BotDataParameter, IBotApi, IBotData, IBotDataModel, IBotDataParameter, IInteractionConsumerRequest, IInteractionConsumerResponse, ZodValidationResult, ZodValidator, createZodErrorObject } from "chat.dev-config";
+import { BotApi, BotData, BotDataParameter, DEBUG_LEVEL, DebugLevelType, IBotApi, IBotData, IBotDataModel, IBotDataParameter, IInteractionConsumerRequest, IInteractionConsumerResponse, ZodValidationResult, ZodValidator, createZodErrorObject } from "chat.dev-config";
 import { Observable, tap } from "rxjs";
-import { clientErrors } from "./config";
+import { clientErrors, config } from "./config";
 import { fetcher } from "./fetcher.function";
+
+type ExtraArgsType = any | {
+    baseUrl?: string; // for debugging purposes
+}
 
 export class Client {
 
@@ -11,9 +15,14 @@ export class Client {
 
     private static apiKey: string;
 
-    constructor(apiKey: string) {
+    private static baseUrl: string = config.baseUrl;
+
+    constructor(apiKey: string, debugLevel: DebugLevelType = DEBUG_LEVEL.NO, extra: ExtraArgsType = {}) {
         if (!apiKey) {
             throw new Error(clientErrors.invalidKey)
+        }
+        if (extra.baseUrl) {
+            Client.baseUrl = extra.baseUrl;
         }
     }
 
@@ -32,7 +41,7 @@ export class Client {
 
     public fetchBot = (botSecret: IBotDataModel["secret"]): Observable<IBotDataModel> => {
         return fetcher<IBotDataModel>(
-            {apiKey: Client.apiKey},
+            {apiKey: Client.apiKey, baseUrl: Client.baseUrl},
             "GET",
             `/bots/${botSecret}`,
         )
@@ -78,7 +87,7 @@ export class Client {
         this.verifyHasBot();
 
         return fetcher<IInteractionConsumerResponse[], IInteractionConsumerRequest>(
-            {apiKey: Client.apiKey},
+            {apiKey: Client.apiKey, baseUrl: Client.baseUrl},
             "POST",
             "/consumer/interactions",
             { interaction: prompt, bot: this.bot }
