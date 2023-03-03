@@ -61,5 +61,6 @@
                 "default": "./lib/cjs/index.js"
             }
         }
-    }
+    },
+    "type": "module"
 }
