@@ -3,7 +3,7 @@ import { fetcher } from "./fetcher.function";
 import { InteractionRequest, InteractionResponse } from "./types/interaction.type";
 import { IBotData, ZodValidator, ZodValidationResult, createZodErrorObject, BotData, IBotApi, BotApi } from "chat.dev-config";
 
-export class ChatDevClient {
+class ChatDevClient {
 
     private bot!: IBotData;
     // private prompt!: string;
@@ -58,3 +58,5 @@ export class ChatDevClient {
         )
     }
 }
+
+export { ChatDevClient };
