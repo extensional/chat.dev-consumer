@@ -52,7 +52,7 @@
         "chat.dev-config": "^1.0.9",
         "rxjs": "^7.8.0"
     },
-    "exports": {
+    "exportssss": {
         ".": {
             "import": "./lib/esm/index.js",
             "require": "./lib/cjs/index.js"
