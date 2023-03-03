@@ -18,11 +18,12 @@ export class Client {
         }
     }
 
-    public setBot = (bot: IBotData): void => {
-        if (!this.validateBot(bot).success) {
-            throw new Error(clientErrors.invalidBot);
+    public setBot = (bot: IBotData): ZodValidationResult<IBotData> => {
+        const validation: ZodValidationResult<IBotData> = this.validateBot(bot);
+        if (validation.success) {
+            this.bot = bot;
         }
-        this.bot = bot;
+        return validation;
     }
 
     public fetchBot = (botSecret: IBotDataModel["secret"]): Observable<IBotDataModel> => {
@@ -39,7 +40,7 @@ export class Client {
             )
     }
 
-    public addApi = (api: IBotApi): void => {
+    public addApi = (api: IBotApi): ZodValidationResult<IBotApi> => {
         this.verifyHasBot();
 
         if (
@@ -49,6 +50,12 @@ export class Client {
         ) {
             throw new Error(clientErrors.apiAdded);
         }
+
+        const validation: ZodValidationResult<IBotApi> = this.validateApi(api);
+        if (validation.success) {
+            this.bot.apis.push(api);
+        }
+        return validation;
     }
 
     public validateBot = (bot: IBotData): ZodValidationResult<IBotData> => {
