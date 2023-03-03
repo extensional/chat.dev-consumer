@@ -1,4 +1,4 @@
-import { IBotData } from "chat.dev-config/lib";
+import { IBotData } from "chat.dev-config";
 
 export interface InteractionRequest {
     interaction: string;
