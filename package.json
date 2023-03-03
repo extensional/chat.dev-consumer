@@ -10,9 +10,8 @@
         "test": "npm run test",
         "clean": "rm -rf ./lib",
         "build": "npm run clean && npm run build:esm && npm run build:cjs",
-        "build:esm": "echo \"hey tsc\"",
+        "build:esm": "tsc --module ES2016 --outDir ./lib/esm",
         "build:cjs": "tsc --module CommonJS --outDir ./lib/cjs",
-        "build:ts": "tsc -p ./tsconfig.json",
         "prepack": "npm run build",
         "publish-to-npm": "npm run prepack && npm version patch && sleep 2 && npm publish"
     },
