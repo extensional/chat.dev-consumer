@@ -11,7 +11,7 @@
         "test": "npm run test",
         "clean": "rm -rf ./lib",
         "build": "npm run clean && npm run build:esm && npm run build:cjs",
-        "build:esm": "tsc && mv ./lib/esm/index.js ./lib/esm/index.mjs",
+        "build:esm": "tsc",
         "build:cjs": "tsc --module CommonJS --outDir ./lib/cjs",
         "build:ts": "tsc -p ./tsconfig.json",
         "prepack": "npm run build",
