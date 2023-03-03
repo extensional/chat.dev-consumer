@@ -26,6 +26,11 @@ export class Client {
         return validation;
     }
 
+    public getBot = (): IBotData => {
+        this.verifyHasBot();
+        return this.bot;
+    }
+
     public fetchBot = (botSecret: IBotDataModel["secret"]): Observable<IBotDataModel> => {
         return fetcher<IBotDataModel>(
             Client.apiKey,
@@ -48,7 +53,7 @@ export class Client {
                 api.endpoint === _api.endpoint &&
                 api.method === _api.method)
         ) {
-            throw new Error(clientErrors.apiAdded);
+            return { success: false, message: clientErrors.apiAdded, errors: {} };
         }
 
         const validation: ZodValidationResult<IBotApi> = this.validateApi(api);
