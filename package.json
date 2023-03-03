@@ -14,7 +14,8 @@
         "build:esm": "tsc && mv ./lib/esm/index.js ./lib/esm/index.mjs",
         "build:cjs": "tsc --module CommonJS --outDir ./lib/cjs",
         "build:ts": "tsc -p ./tsconfig.json",
-        "prepack": "npm run build"
+        "prepack": "npm run build",
+        "publish": "npm run build && npm version && npm publish"
     },
     "repository": {
         "type": "git",
