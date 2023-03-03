@@ -1,8 +1,7 @@
-import { BotApi, BotData, BotDataParameter, IBotApi, IBotData, IBotDataModel, IBotDataParameter, ZodValidationResult, ZodValidator, createZodErrorObject } from "chat.dev-config";
+import { BotApi, BotData, BotDataParameter, IBotApi, IBotData, IBotDataModel, IBotDataParameter, IInteractionConsumerRequest, IInteractionConsumerResponse, ZodValidationResult, ZodValidator, createZodErrorObject } from "chat.dev-config";
 import { Observable, tap } from "rxjs";
 import { clientErrors } from "./config";
 import { fetcher } from "./fetcher.function";
-import { InteractionRequest, InteractionResponse } from "./types/interaction.type";
 
 export class Client {
 
@@ -33,7 +32,7 @@ export class Client {
 
     public fetchBot = (botSecret: IBotDataModel["secret"]): Observable<IBotDataModel> => {
         return fetcher<IBotDataModel>(
-            Client.apiKey,
+            {apiKey: Client.apiKey},
             "GET",
             `/bots/${botSecret}`,
         )
@@ -75,11 +74,11 @@ export class Client {
         return this.validateGeneric<IBotDataParameter>(botParam, BotDataParameter);
     }
 
-    public sendInteraction = (prompt: string): Observable<InteractionResponse[]> => {
+    public sendInteraction = (prompt: string): Observable<IInteractionConsumerResponse[]> => {
         this.verifyHasBot();
 
-        return fetcher<InteractionResponse[], InteractionRequest>(
-            Client.apiKey,
+        return fetcher<IInteractionConsumerResponse[], IInteractionConsumerRequest>(
+            {apiKey: Client.apiKey},
             "POST",
             "/consumer/interactions",
             { interaction: prompt, bot: this.bot }

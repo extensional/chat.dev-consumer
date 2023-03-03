@@ -2,29 +2,35 @@ import axios, { AxiosResponse } from "axios";
 import { Observable, from } from "rxjs";
 import { config } from "./config";
 
-const defaultHeaders = (apiKey: string): Record<string, string> => {
+interface RequestConfiguration {
+    apiKey: string;
+    origin?: string;
+}
+
+const defaultHeaders = (configuration: RequestConfiguration): Record<string, string> => {
     const headers: Record<string, string> = {};
 
-    headers.Authorization = "Bearer " + apiKey;
+    headers.Authorization = "Bearer " + configuration.apiKey;
     headers["content-type"] = "application/json";
-    headers["host-origin"] = window.location.origin;
+    if (configuration?.origin) {
+        headers["origin"] = configuration.origin;
+    }
 
     return headers;
 };
 
 export const fetcher = <T, BodyType = T>(
-    apiKey: string,
+    configuration: RequestConfiguration,
     method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE",
     url: string,
-    body?: BodyType,
-    followUnauthorizedRedirects: boolean = true,
+    body?: BodyType
 ): Observable<T> => {
     return from<Promise<T>>(
         axios.request({
             url,
             method,
             baseURL: config.baseUrl,
-            headers: defaultHeaders(apiKey),
+            headers: defaultHeaders(configuration),
             withCredentials: true,
             validateStatus: function (status: number) {
                 return ![401, 400, 403, 500, 503, 422, 404].includes(status);
