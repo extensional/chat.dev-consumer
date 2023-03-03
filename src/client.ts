@@ -1,28 +1,77 @@
-import { Observable } from "rxjs";
+import { BotApi, BotData, BotDataParameter, IBotApi, IBotData, IBotDataModel, IBotDataParameter, ZodValidationResult, ZodValidator, createZodErrorObject } from "chat.dev-config";
+import { Observable, tap } from "rxjs";
+import { clientErrors } from "./config";
 import { fetcher } from "./fetcher.function";
 import { InteractionRequest, InteractionResponse } from "./types/interaction.type";
-import { IBotData, ZodValidator, ZodValidationResult, createZodErrorObject, BotData, IBotApi, BotApi } from "chat.dev-config";
 
-class ChatDevClient {
+export class Client {
 
     private bot!: IBotData;
-    // private prompt!: string;
-    // private interactions!: any[];
 
-    private apiKey: string;
+    private botModel!: IBotDataModel;
+
+    private static apiKey: string;
 
     constructor(apiKey: string) {
         if (!apiKey) {
-            throw new Error("you can find the key on https://chat.dev")
+            throw new Error(clientErrors.invalidKey)
         }
-        this.apiKey = apiKey;
     }
 
-    public setBot = (bot: IBotData) => {
+    public setBot = (bot: IBotData): void => {
         if (!this.validateBot(bot).success) {
-            throw new Error("bot is invalid. please validate the bot first");
+            throw new Error(clientErrors.invalidBot);
         }
         this.bot = bot;
+    }
+
+    public fetchBot = (botSecret: IBotDataModel["secret"]): Observable<IBotDataModel> => {
+        return fetcher<IBotDataModel>(
+            Client.apiKey,
+            "GET",
+            `/bots/${botSecret}`,
+        )
+            .pipe(
+                tap((b: IBotDataModel) => {
+                    this.botModel = b;
+                    this.bot = b;
+                })
+            )
+    }
+
+    public addApi = (api: IBotApi): void => {
+        this.verifyHasBot();
+
+        if (
+            this.bot.apis.find((_api: IBotApi) =>
+                api.endpoint === _api.endpoint &&
+                api.method === _api.method)
+        ) {
+            throw new Error(clientErrors.apiAdded);
+        }
+    }
+
+    public validateBot = (bot: IBotData): ZodValidationResult<IBotData> => {
+        return this.validateGeneric<IBotData>(bot, BotData);
+    }
+
+    public validateApi = (botApi: IBotApi): ZodValidationResult<IBotApi> => {
+        return this.validateGeneric<IBotApi>(botApi, BotApi);
+    }
+
+    public validateParam = (botParam: IBotDataParameter): ZodValidationResult<IBotDataParameter> => {
+        return this.validateGeneric<IBotDataParameter>(botParam, BotDataParameter);
+    }
+
+    public sendInteraction = (prompt: string): Observable<InteractionResponse[]> => {
+        this.verifyHasBot();
+
+        return fetcher<InteractionResponse[], InteractionRequest>(
+            Client.apiKey,
+            "POST",
+            "/consumer/interactions",
+            { interaction: prompt, bot: this.bot }
+        )
     }
 
     private validateGeneric = <T extends Record<string, any>>(
@@ -37,26 +86,11 @@ class ChatDevClient {
         }
     }
 
-    public validateBot = (bot: IBotData): ZodValidationResult<IBotData> => {
-        return this.validateGeneric<IBotData>(bot, BotData);
-    }
-
-    public validateApi = (botApi: IBotApi): ZodValidationResult<IBotApi> => {
-        return this.validateGeneric<IBotApi>(botApi, BotApi);
-    }
-
-    public sendInteraction = (prompt: string): Observable<InteractionResponse[]> => {
-        if (!this.bot) {
-            throw new Error("please set a bot first");
+    private verifyHasBot = (): void => {
+        if (this.bot || this.botModel) {
+            // ok
+        } else {
+            throw new Error(clientErrors.mustSetBot);
         }
-
-        return fetcher<InteractionResponse[], InteractionRequest>(
-            this.apiKey,
-            "POST",
-            "/consumer/interactions",
-            { interaction: prompt, bot: this.bot }
-        )
     }
 }
-
-export { ChatDevClient };
