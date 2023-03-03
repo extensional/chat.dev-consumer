@@ -62,16 +62,6 @@
                 "types": "./lib/cjs/index.d.ts",
                 "default": "./lib/cjs/index.js"
             }
-        },
-        "./client": {
-            "import": {
-                "types": "./lib/esm/client.d.ts",
-                "default": "./lib/esm/client.js"
-            },
-            "require": {
-                "types": "./lib/cjs/client.d.ts",
-                "default": "./lib/cjs/client.js"
-            }
         }
     }
 }
