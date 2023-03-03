@@ -1,16 +1,15 @@
 {
     "name": "chat.dev-consumer",
-    "version": "1.0.21",
+    "version": "1.0.19",
     "description": "Connect to, and interact with, chat.dev",
     "main": "lib/cjs/index.js",
-    "module": "lib/esm/index.js",
     "files": [
         "lib"
     ],
     "scripts": {
         "test": "npm run test",
         "clean": "rm -rf ./lib",
-        "build": "npm run clean && npm run build:cjs",
+        "build": "npm run clean && npm run build:esm && npm run build:cjs",
         "build:esm": "tsc",
         "build:cjs": "tsc --module CommonJS --outDir ./lib/cjs",
         "build:ts": "tsc -p ./tsconfig.json",
