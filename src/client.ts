@@ -1,7 +1,7 @@
-import { BotApi, BotData, IBotApi, IBotData, ZodValidationResult, ZodValidator, createZodErrorObject } from "chat.dev-config/lib";
 import { Observable } from "rxjs";
 import { fetcher } from "./fetcher.function";
 import { InteractionRequest, InteractionResponse } from "./types/interaction.type";
+import { IBotData, ZodValidator, ZodValidationResult, createZodErrorObject, BotData, IBotApi, BotApi } from "chat.dev-config";
 
 export class ChatDevClient {
 
