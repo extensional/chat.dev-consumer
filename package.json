@@ -1,6 +1,6 @@
 {
     "name": "chat.dev-consumer",
-    "version": "1.0.20",
+    "version": "1.0.21",
     "description": "Connect to, and interact with, chat.dev",
     "main": "lib/cjs/index.js",
     "files": [
