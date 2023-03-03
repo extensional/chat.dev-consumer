@@ -53,11 +53,11 @@
     "exports": {
         ".": {
             "import": {
-                "types": "./lib/esm/types/index.d.ts",
-                "default": "./lib/esm/index.mjs"
+                "types":   "./lib/esm/index.d.ts",
+                "default": "./lib/esm/index.js"
             },
             "require": {
-                "types": "./lib/cjs/types/index.d.ts",
+                "types":   "./lib/cjs/index.d.ts",
                 "default": "./lib/cjs/index.js"
             }
         }
