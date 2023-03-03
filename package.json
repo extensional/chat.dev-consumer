@@ -2,8 +2,9 @@
     "name": "chat.dev-consumer",
     "version": "1.0.28",
     "description": "Connect to, and interact with, chat.dev",
-    "main": "lib/cjs/index.js",
-    "module": "lib/esm/index.js",
+    "main": "./lib/cjs/index.js",
+    "module": "./lib/esm/index.js",
+    "types": "./lib/esm/index.d.ts",
     "files": [
         "lib"
     ],
