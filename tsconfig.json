@@ -3,7 +3,6 @@
         "allowSyntheticDefaultImports": true,
         "declaration": true,
         "esModuleInterop": true,
-        "jsx": "react",
         "lib": [
             "es5",
             "es2015",
