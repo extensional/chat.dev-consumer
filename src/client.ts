@@ -6,8 +6,8 @@ import { InteractionRequest, InteractionResponse } from "./types/interaction.typ
 export class ChatDevClient {
 
     private bot!: IBotData;
-    private prompt!: string;
-    private interactions!: any[];
+    // private prompt!: string;
+    // private interactions!: any[];
 
     private apiKey: string;
 
