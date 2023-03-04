@@ -1,5 +1,4 @@
 import { BotApi, BotData, BotDataParameter, DEBUG_LEVEL, DebugLevelType, IBotApi, IBotData, IBotDataModel, IBotDataParameter, IInteractionConsumerPrompt, IInteractionConsumerRequest, IInteractionConsumerResponse, ZodValidationResult, ZodValidator, createZodErrorObject } from "chat.dev-config";
-import { Observable, tap } from "rxjs";
 import { clientErrors, config } from "./config";
 import { fetcher } from "./fetcher.function";
 
@@ -43,18 +42,18 @@ export class Client {
 
     public getPromptHistory = (): IInteractionConsumerPrompt[] => this.interactions;
 
-    public fetchBot = (botSecret: IBotDataModel["secret"]): Observable<IBotDataModel> => {
+    public fetchBot = (botSecret: IBotDataModel["secret"]): Promise<IBotDataModel> => {
         return fetcher<IBotDataModel>(
             { apiKey: Client.apiKey, baseUrl: Client.baseUrl },
             "GET",
             `/bots/${botSecret}`,
         )
-            .pipe(
-                tap((b: IBotDataModel) => {
-                    this.botModel = b;
-                    this.bot = b;
-                })
-            )
+            .then((b: IBotDataModel) => {
+                this.botModel = b;
+                this.bot = b;
+
+                return b;
+            });
     }
 
     public addApi = (api: IBotApi): ZodValidationResult<IBotApi> => {
@@ -87,7 +86,7 @@ export class Client {
         return this.validateGeneric<IBotDataParameter>(botParam, BotDataParameter);
     }
 
-    public sendInteraction = (promptQuery: string): Observable<IInteractionConsumerResponse> => {
+    public sendInteraction = (promptQuery: string): Promise<IInteractionConsumerResponse> => {
         this.verifyHasBot();
 
         return fetcher<IInteractionConsumerResponse, IInteractionConsumerRequest>(
@@ -96,11 +95,10 @@ export class Client {
             "/consumer/interactions",
             { question: promptQuery, bot: this.bot, history: this.interactions }
         )
-            .pipe(
-                tap((response: IInteractionConsumerResponse) => {
-                    this.interactions = response.history;
-                })
-            )
+            .then((response: IInteractionConsumerResponse) => {
+                this.interactions = response.history;
+                return response;
+            });
     }
 
     private validateGeneric = <T extends Record<string, any>>(

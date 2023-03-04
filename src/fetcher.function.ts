@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from "axios";
-import { Observable, from } from "rxjs";
 import { config } from "./config";
 
 interface RequestConfiguration {
@@ -25,19 +24,18 @@ export const fetcher = <T, BodyType = T>(
     method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE",
     url: string,
     body?: BodyType
-): Observable<T> => {
-    return from<Promise<T>>(
-        axios.request({
-            url,
-            method,
-            baseURL: configuration.baseUrl ?? config.baseUrl,
-            headers: defaultHeaders(configuration),
-            withCredentials: true,
-            validateStatus: function (status: number) {
-                return ![401, 400, 403, 500, 503, 422, 404].includes(status);
-            },
-            ...body ? { data: body } : {},
-        })
-            .then((r: AxiosResponse<T>) => r.data),
-    )
+): Promise<T> => {
+    return axios.request({
+        url,
+        method,
+        baseURL: configuration.baseUrl ?? config.baseUrl,
+        headers: defaultHeaders(configuration),
+        withCredentials: true,
+        validateStatus: function (status: number) {
+            return ![401, 400, 403, 500, 503, 422, 404].includes(status);
+        },
+        ...body ? { data: body } : {},
+    })
+        .then((r: AxiosResponse<T>) => r.data);
+
 };
