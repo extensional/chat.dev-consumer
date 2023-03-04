@@ -1,4 +1,4 @@
-import { BotApi, BotData, BotDataParameter, DEBUG_LEVEL, DebugLevelType, IBotApi, IBotData, IBotDataModel, IBotDataParameter, IInteractionConsumerRequest, IInteractionConsumerResponse, ZodValidationResult, ZodValidator, createZodErrorObject } from "chat.dev-config";
+import { BotApi, BotData, BotDataParameter, DEBUG_LEVEL, DebugLevelType, IBotApi, IBotData, IBotDataModel, IBotDataParameter, IInteractionConsumerPrompt, IInteractionConsumerRequest, IInteractionConsumerResponse, ZodValidationResult, ZodValidator, createZodErrorObject } from "chat.dev-config";
 import { Observable, tap } from "rxjs";
 import { clientErrors, config } from "./config";
 import { fetcher } from "./fetcher.function";
@@ -12,6 +12,8 @@ export class Client {
     private bot!: IBotData;
 
     private botModel!: IBotDataModel;
+
+    private interactions: IInteractionConsumerPrompt[] = [];
 
     private static apiKey: string;
 
@@ -39,9 +41,11 @@ export class Client {
         return this.bot;
     }
 
+    public getPromptHistory = (): IInteractionConsumerPrompt[] => this.interactions;
+
     public fetchBot = (botSecret: IBotDataModel["secret"]): Observable<IBotDataModel> => {
         return fetcher<IBotDataModel>(
-            {apiKey: Client.apiKey, baseUrl: Client.baseUrl},
+            { apiKey: Client.apiKey, baseUrl: Client.baseUrl },
             "GET",
             `/bots/${botSecret}`,
         )
@@ -83,15 +87,20 @@ export class Client {
         return this.validateGeneric<IBotDataParameter>(botParam, BotDataParameter);
     }
 
-    public sendInteraction = (prompt: string): Observable<IInteractionConsumerResponse[]> => {
+    public sendInteraction = (promptQuery: string): Observable<IInteractionConsumerResponse> => {
         this.verifyHasBot();
 
-        return fetcher<IInteractionConsumerResponse[], IInteractionConsumerRequest>(
-            {apiKey: Client.apiKey, baseUrl: Client.baseUrl},
+        return fetcher<IInteractionConsumerResponse, IInteractionConsumerRequest>(
+            { apiKey: Client.apiKey, baseUrl: Client.baseUrl },
             "POST",
             "/consumer/interactions",
-            { interaction: prompt, bot: this.bot }
+            { question: promptQuery, bot: this.bot, history: this.interactions }
         )
+            .pipe(
+                tap((response: IInteractionConsumerResponse) => {
+                    this.interactions = response.history;
+                })
+            )
     }
 
     private validateGeneric = <T extends Record<string, any>>(
