@@ -3,7 +3,7 @@ import { clientErrors, config } from "./config";
 import { fetcher } from "./fetcher.function";
 
 type ExtraArgsType = any | {
-    baseUrl?: string; // for debugging purposes
+    debugUrl?: string; // for debugging purposes
 }
 
 export class Client {
@@ -18,30 +18,66 @@ export class Client {
 
     private static baseUrl: string = config.baseUrl;
 
-    constructor(apiKey: string, debugLevel: DebugLevelType = DEBUG_LEVEL.NO, extra: ExtraArgsType = {}) {
+    /**
+     * Create a new instance. The apiKey is mandatory unless you have called {@see init} before.
+     * @param apiKey string
+     * @param debugLevel DebugLevelType
+     */
+    constructor(apiKey: string = Client.apiKey, debugLevel: DebugLevelType = DEBUG_LEVEL.NO, extra: ExtraArgsType = {}) {
+        if (apiKey) {
+            Client.apiKey = apiKey;
+        }
         if (!apiKey) {
             throw new Error(clientErrors.invalidKey)
         }
-        if (extra.baseUrl) {
-            Client.baseUrl = extra.baseUrl;
+        
+        if (extra.debugUrl) {
+            Client.baseUrl = extra.debugUrl;
         }
     }
 
+    /**
+     * Instead of passing an apiKey to each <code>new Client("MY_KEY")</code> you can call {@see init} once
+     * @param apiKey string
+     */
+    public static init = (apiKey: string): void => {
+        Client.apiKey = apiKey;
+    }
+
+    /**
+     * Sets the bot into the instance
+     * @param IBotData
+     * @returns 
+     */
     public setBot = (bot: IBotData): ZodValidationResult<IBotData> => {
         const validation: ZodValidationResult<IBotData> = this.validateBot(bot);
         if (validation.success) {
             this.bot = bot;
+            this.interactions = [];
         }
         return validation;
     }
 
+    /**
+     * Retrieves the bot instance
+     * @returns IBotData
+     */
     public getBot = (): IBotData => {
         this.verifyHasBot();
         return this.bot;
     }
 
+    /**
+     * Retrieves the history of interactions with the last bot.
+     * @returns IInteractionConsumerPrompt[]
+     */
     public getPromptHistory = (): IInteractionConsumerPrompt[] => this.interactions;
 
+    /**
+     * If you know the botSecret, you can fetch it from the server.
+     * @param botSecret string
+     * @returns Promise<IBotDataModel>
+     */
     public fetchBot = (botSecret: IBotDataModel["secret"]): Promise<IBotDataModel> => {
         return fetcher<IBotDataModel>(
             { apiKey: Client.apiKey, baseUrl: Client.baseUrl },
@@ -51,11 +87,15 @@ export class Client {
             .then((b: IBotDataModel) => {
                 this.botModel = b;
                 this.bot = b;
-
                 return b;
             });
     }
 
+    /**
+     * If you didn't set all the apis when you called {@see setBot}, you can add them one by one here
+     * @param api IBotApi
+     * @returns ZodValidationResult<IBotApi>
+     */
     public addApi = (api: IBotApi): ZodValidationResult<IBotApi> => {
         this.verifyHasBot();
 
@@ -74,18 +114,38 @@ export class Client {
         return validation;
     }
 
-    public validateBot = (bot: IBotData): ZodValidationResult<IBotData> => {
-        return this.validateGeneric<IBotData>(bot, BotData);
+    /**
+     * Validates that the given bot is valid
+     * @param bot IBotData
+     * @returns ZodValidationResult<IBotData>
+    */
+   public validateBot = (bot: IBotData): ZodValidationResult<IBotData> => {
+       return this.validateGeneric<IBotData>(bot, BotData);
     }
-
+    
+    /**
+     * Validates that the given api is valid
+     * @param bot IBotApi
+     * @returns ZodValidationResult<IBotApi>
+     */
     public validateApi = (botApi: IBotApi): ZodValidationResult<IBotApi> => {
         return this.validateGeneric<IBotApi>(botApi, BotApi);
     }
-
+    
+    /**
+     * Validates that the given param is valid
+     * @param bot IBotDataParameter
+     * @returns ZodValidationResult<IBotDataParameter>
+     */
     public validateParam = (botParam: IBotDataParameter): ZodValidationResult<IBotDataParameter> => {
         return this.validateGeneric<IBotDataParameter>(botParam, BotDataParameter);
     }
 
+    /**
+     * Sends a query prompt to the server and returns the response.
+     * @param promptQuery string
+     * @returns Promise<IInteractionConsumerResponse>
+     */
     public sendInteraction = (promptQuery: string): Promise<IInteractionConsumerResponse> => {
         this.verifyHasBot();
 
