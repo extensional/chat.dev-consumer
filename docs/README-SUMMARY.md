@@ -1,5 +1,4 @@
-
-‌# Summary​
+# Summary
 
 ## Chat.dev Consumer pages
 

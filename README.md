@@ -1,4 +1,4 @@
-# chat.dev-consumer
+# Consumer Docs
 
 https://www.npmjs.com/package/chat.dev-consumer
 ### A Promise-based Typescript-first consumer for https://chat.dev  
