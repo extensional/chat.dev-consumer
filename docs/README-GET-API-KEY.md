@@ -6,7 +6,7 @@ To get an api key, log in to [https://chat.dev/] and access the page [https://ch
 
 Once you have accessed the page you will see an API Key (or more, depending on your subscription plan.)
 
-![user API keys](./docs-assets/keys.png)
+![user API keys](./docs-assets/key.png)
 
 Click on the `🔗` icon to copy the key to the clipboard
 
