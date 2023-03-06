@@ -7,5 +7,5 @@
 
 ## Extra info
 
-* [Extra](./docs/README-EXTRA.md)    
+* [Who we are](./docs/README-EXTRA.md)    
 * [License](./docs/README-LICENSE.md)
