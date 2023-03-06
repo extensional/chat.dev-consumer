@@ -4,3 +4,4 @@ root: ./
     docs: ./README.md  
     config: ./README-GET-API-KEY.md
     extra: ./README-EXTRA.md
+    summary: ./README-SUMMARY.md

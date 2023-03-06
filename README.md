@@ -3,6 +3,9 @@
 https://www.npmjs.com/package/chat.dev-consumer
 ### A Promise-based Typescript-first consumer for https://chat.dev  
 
+The Consumer `ChatDevClient` is a javascript, promise-based, Typescript-first class that simplifies the creation, validation and interaction of your code with out chat.dev API.
+
+
 ---
 
 ## Installation
