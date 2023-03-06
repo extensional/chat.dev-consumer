@@ -1,4 +1,3 @@
 # Who we are
-This sofware was developed by Anarchy.AI. ([https://github.com/extensional](https://github.com/extensional) by [@nicojones](https://github.com/nicoJones))
 
-
+This sofware was developed by Anarchy.AI. (https://github.com/extensional by [@nicojones](https://github.com/nicoJones))
