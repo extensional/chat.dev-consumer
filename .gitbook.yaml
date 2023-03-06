@@ -1,7 +1,7 @@
 root: ./
 
 ​structure:  
-    docs: ./README.md  
+    readme: ./README.md  
     config: ./README-GET-API-KEY.md
     extra: ./README-EXTRA.md
     summary: ./README-SUMMARY.md
