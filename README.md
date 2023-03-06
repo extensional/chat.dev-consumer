@@ -112,13 +112,15 @@ client.setApi(api);
 client.setApi(api); // can't be added twice -> the validation will indicate why.
 ```
 
-If the API hasbeen added already, an error will be thrown.
+If the API has been added already, an error will be thrown.
 
 The `bot` and `api` will be validated when calling their respective `setBot()` and `setApi()` functions. If they are invalid, an error object will be returned.
 
 ## Validation
 
-To avoid erros being thrown, we can also validate the data before passing it to our client:
+### Cautious validation
+
+To avoid unexpected issues, we can validate the data before passing it to our client:
 
 ```ts
 import { ChatDevClient, IBotApi, IBotData, ZodValidationResult } from "chat.dev-consumer";
@@ -148,6 +150,26 @@ if (!validateApi.success) {
 }
 
 client.setApi(api);
+```
+
+### In-time validation
+
+The data is also validated when we set a Bot or add an API:
+
+```ts
+import { ChatDevClient, IBotApi, IBotData, ZodValidationResult } from "chat.dev-consumer";
+
+const client = new ChatDevClient("MY_SECRET_KEY");
+const bot: IBotData = { ... }
+
+const botAdded: ZodValidationResult<IBotData> = client.setBot(bot);
+
+if (!botAdded.success) {
+    // handle the error
+    console.log(validateBot.errors);
+} else {
+    // bot is valid, and HAS BEEN added to client!
+}
 ```
 
 ## Interaction
