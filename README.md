@@ -15,7 +15,8 @@ npm install chat.dev-consumer
 
 ## Configuration
 
-You can retrieve a key for the consumer at <a href="https://chat.dev/settings" target="_blank">https://chat.dev/settings</a>. These keys start with `cd-sk-*****`.
+You can retrieve a key for the consumer at <a href="https://chat.dev/settings" target="_blank">https://chat.dev/settings</a>.  
+These keys start with `cd-sk-*****`.
 
 Create a new instance in your code in one of the following two ways:
 
