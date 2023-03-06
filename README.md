@@ -5,7 +5,6 @@
 
 The Consumer `ChatDevClient` is a javascript, promise-based, Typescript-first class that simplifies the creation, validation and interaction of your code with out chat.dev API.
 
-
 ---
 
 ## Installation
