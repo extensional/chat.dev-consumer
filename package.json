@@ -1,7 +1,7 @@
 {
-    "name": "chat.dev-consumer",
-    "version": "1.1.9",
-    "description": "Connect to, and interact with, chat.dev",
+    "name": "@anarchy-ai/chat",
+    "version": "1.0.0",
+    "description": "Connect to, and interact with, chat.dev, an Anarchy product",
     "main": "./lib/cjs/index.js",
     "module": "./lib/esm/index.js",
     "types": "./lib/esm/index.d.ts",
@@ -29,8 +29,8 @@
         "npl",
         "openai"
     ],
-    "author": "Nico Kupfer @ Anarchy.ai",
-    "license": "ISC",
+    "author": "Nico Kupfer @ Anarchy",
+    "license": "MIT",
     "bugs": {
         "url": "https://github.com/extensional/chat.dev-consumer/issues"
     },

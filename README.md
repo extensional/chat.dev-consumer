@@ -1,6 +1,6 @@
 # Installation and usage
 
-[https://www.npmjs.com/package/chat.dev-consumer](https://www.npmjs.com/package/chat.dev-consumer)
+[https://www.npmjs.com/package/anarchy-chat](https://www.npmjs.com/package/anarchy-chat)
 
 ### A Promise-based Typescript-first consumer for [https://chat.dev](https://chat.dev)
 
@@ -13,7 +13,7 @@ The Consumer `ChatDevClient` is a javascript, promise-based, Typescript-first cl
 To install, run
 
 ```js
-npm install chat.dev-consumer
+npm install anarchy-chat
 ```
 
 ## Configuration
@@ -26,7 +26,7 @@ Create a new instance in your code in one of the following two ways:
 1.  Set the key only once and reuse it (at a module level):
 
     ```ts
-    import { ChatDevClient } from "chat.dev-consumer";
+    import { ChatDevClient } from "anarchy-chat";
 
     ChatDevClient.init("MY_SECRET_KEY"); // the key is set "globally"
     const client1 = new ChatDevClient(); // will use MY_SECRET_KEY
@@ -35,7 +35,7 @@ Create a new instance in your code in one of the following two ways:
 2.  Set the key once per instance
 
     ```ts
-    import { ChatDevClient } from "chat.dev-consumer";
+    import { ChatDevClient } from "anarchy-chat";
 
     const client1 = new ChatDevClient("MY_SECRET_KEY"); // will use MY_SECRET_KEY
     const client2 = new ChatDevClient(); // throws error!
@@ -48,7 +48,7 @@ To start, you must create a bot and pass it to the client. The bot is structured
 *   Bot with APIs
 
     ```ts
-    import { IBotData } from "chat.dev-consumer";
+    import { IBotData } from "anarchy-chat";
     // A bot with APIs
     const bot: IBotData = {
             name: "my-bot",
@@ -74,7 +74,7 @@ To start, you must create a bot and pass it to the client. The bot is structured
 *   Bot without APIs
 
     ```ts
-    import { IBotData } from "chat.dev-consumer";
+    import { IBotData } from "anarchy-chat";
     // A bot without APIs. They can be added later
     const bot: IBotData = {
             name: "my-bot",
@@ -86,7 +86,7 @@ To start, you must create a bot and pass it to the client. The bot is structured
 Now the bot can be added to the client:
 
 ```ts
-import { ChatDevClient, IBotData } from "chat.dev-consumer";
+import { ChatDevClient, IBotData } from "anarchy-chat";
 
 const client = new ChatDevClient("MY_SECRET_KEY");
 client.setBot(bot);
@@ -95,7 +95,7 @@ client.setBot(bot);
 You can still add APIs to it after that:
 
 ```ts
-import { ChatDevClient, IBotApi } from "chat.dev-consumer";
+import { ChatDevClient, IBotApi } from "anarchy-chat";
 
 const client = new ChatDevClient("MY_SECRET_KEY");
 client.setBot(bot);
@@ -130,7 +130,7 @@ The `bot` and `api` will be validated when calling their respective `setBot()` a
 To avoid unexpected issues, we can validate the data before passing it to our client:
 
 ```ts
-import { ChatDevClient, IBotApi, IBotData, ZodValidationResult } from "chat.dev-consumer";
+import { ChatDevClient, IBotApi, IBotData, ZodValidationResult } from "anarchy-chat";
 
 const client = new ChatDevClient("MY_SECRET_KEY");
 const bot: IBotData = { ... }
@@ -164,7 +164,7 @@ client.setApi(api);
 The data is also validated when we set a Bot or add an API:
 
 ```ts
-import { ChatDevClient, IBotApi, IBotData, ZodValidationResult } from "chat.dev-consumer";
+import { ChatDevClient, IBotApi, IBotData, ZodValidationResult } from "anarchy-chat";
 
 const client = new ChatDevClient("MY_SECRET_KEY");
 const bot: IBotData = { ... }
@@ -184,7 +184,7 @@ if (!botAdded.success) {
 Once a bot has been set, and we are happy with its data (check `client.getBot()` if you want to retrieve its value) we can start sending requests
 
 ```ts
-import { ChatDevClient, IBotApi, IBotData, ZodValidationResult, IInteractionConsumerResponse } from "chat.dev-consumer";
+import { ChatDevClient, IBotApi, IBotData, ZodValidationResult, IInteractionConsumerResponse } from "anarchy-chat";
 
 const client = new ChatDevClient("MY_SECRET_KEY");
 client.setBot({ ... });
