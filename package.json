@@ -1,5 +1,5 @@
 {
-    "name": "@anarchy-ai/chat",
+    "name": "anarchy-chat",
     "version": "0.1.0",
     "description": "Connect to, and interact with, chat.dev, an Anarchy product",
     "main": "./lib/cjs/index.js",
