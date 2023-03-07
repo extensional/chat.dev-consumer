@@ -23,11 +23,7 @@ import { ChatDevClient, IBotApiInput, IBotDataInput } from "chat.dev-consumer";
 
     const myApi: IBotApiInput = {
         description: "retrieves random user information",
-        method: "GET",
         endpoint: "https://randomuser.me",
-        example: "",
-        position: 0,
-        cert: "",
     };
 
     const validationApi = botClient.validateApi(myApi);

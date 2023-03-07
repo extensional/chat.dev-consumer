@@ -16,12 +16,10 @@ import { ChatDevClient } from "chat.dev-consumer";
                 description: "retrieves distance and weather information between places",
                 method: "GET",
                 endpoint: "https://distance-calculator.example.com",
-                params: [],
-                jsonBody: [],
-                dataBody: [],
-                headers: [],
-                authorization: [],
-                cert: "",
+                params: [
+                    {name: "from", value: "the place from where we leave", isValue: false},
+                    {name: "to", value: "the place we go to", isValue: false},
+                ],
             }
         ],
     });
