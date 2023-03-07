@@ -52,7 +52,7 @@ export class Client {
     public setBot = (bot: IBotData): ZodValidationResult<IBotData> => {
         const validation: ZodValidationResult<IBotData> = this.validateBot(bot);
         if (validation.success) {
-            this.bot = bot;
+            this.bot = BotData.parse(bot);
             this.interactions = [];
         }
         return validation;
@@ -109,7 +109,7 @@ export class Client {
 
         const validation: ZodValidationResult<IBotApi> = this.validateApi(api);
         if (validation.success) {
-            this.bot.apis.push(api);
+            this.bot.apis.push(BotApi.parse(api));
         }
         return validation;
     }
