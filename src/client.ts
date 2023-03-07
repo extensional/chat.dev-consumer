@@ -1,4 +1,4 @@
-import { BotApi, BotData, BotDataParameter, DEBUG_LEVEL, DebugLevelType, IBotApi, IBotData, IBotDataModel, IBotDataParameter, IInteractionConsumerPrompt, IInteractionConsumerRequest, IInteractionConsumerResponse, ZodValidationResult, ZodValidator, createZodErrorObject } from "chat.dev-config";
+import { BotApi, BotData, BotDataParameter, DEBUG_LEVEL, DebugLevelType, IBotApi, IBotApiInput, IBotData, IBotDataInput, IBotDataModel, IBotDataParameter, IBotDataParameterInput, IInteractionConsumerPrompt, IInteractionConsumerRequest, IInteractionConsumerResponse, ZodValidationResult, ZodValidator, createZodErrorObject } from "chat.dev-config";
 import { clientErrors, config } from "./config";
 import { fetcher } from "./fetcher.function";
 
@@ -49,7 +49,7 @@ export class Client {
      * @param IBotData
      * @returns 
      */
-    public setBot = (bot: IBotData): ZodValidationResult<IBotData> => {
+    public setBot = (bot: IBotDataInput): ZodValidationResult<IBotData> => {
         const validation: ZodValidationResult<IBotData> = this.validateBot(bot);
         if (validation.success) {
             this.bot = BotData.parse(bot);
@@ -96,7 +96,7 @@ export class Client {
      * @param api IBotApi
      * @returns ZodValidationResult<IBotApi>
      */
-    public addApi = (api: IBotApi): ZodValidationResult<IBotApi> => {
+    public addApi = (api: IBotApiInput): ZodValidationResult<IBotApi> => {
         this.verifyHasBot();
 
         if (
@@ -119,8 +119,8 @@ export class Client {
      * @param bot IBotData
      * @returns ZodValidationResult<IBotData>
     */
-   public validateBot = (bot: IBotData): ZodValidationResult<IBotData> => {
-       return this.validateGeneric<IBotData>(bot, BotData);
+   public validateBot = (bot: IBotDataInput): ZodValidationResult<IBotData> => {
+       return this.validateGeneric<IBotDataInput, IBotData>(bot, BotData);
     }
     
     /**
@@ -128,8 +128,8 @@ export class Client {
      * @param bot IBotApi
      * @returns ZodValidationResult<IBotApi>
      */
-    public validateApi = (botApi: IBotApi): ZodValidationResult<IBotApi> => {
-        return this.validateGeneric<IBotApi>(botApi, BotApi);
+    public validateApi = (botApi: IBotApiInput): ZodValidationResult<IBotApi> => {
+        return this.validateGeneric<IBotApiInput, IBotApi>(botApi, BotApi);
     }
     
     /**
@@ -137,8 +137,8 @@ export class Client {
      * @param bot IBotDataParameter
      * @returns ZodValidationResult<IBotDataParameter>
      */
-    public validateParam = (botParam: IBotDataParameter): ZodValidationResult<IBotDataParameter> => {
-        return this.validateGeneric<IBotDataParameter>(botParam, BotDataParameter);
+    public validateParam = (botParam: IBotDataParameterInput): ZodValidationResult<IBotDataParameter> => {
+        return this.validateGeneric<IBotDataParameterInput, IBotDataParameter>(botParam, BotDataParameter);
     }
 
     /**
@@ -161,8 +161,8 @@ export class Client {
             });
     }
 
-    private validateGeneric = <T extends Record<string, any>>(
-        object: T,
+    private validateGeneric = <I extends Record<string, any>, T extends Record<string, any>>(
+        object: I,
         validationClass: ZodValidator<any>
     ): ZodValidationResult<T> => {
         const validation = validationClass.safeParse(object);
