@@ -2,8 +2,8 @@
 
 ## Docs
 
-* [Getting the keys](./docs/README-GET-API-KEY.md)    
 * [Installation and usage](./README.md)    
+* [Getting the keys](./docs/README-GET-API-KEY.md)    
 
 ## Extra info
 
