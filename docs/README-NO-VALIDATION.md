@@ -1,3 +1,7 @@
+# Example without validation
+
+## Here is an example of a full setup, where we _know_ the data is valid, and thus we don't validate it.
+
 ```ts
 import { ChatDevClient } from "chat.dev-consumer";
 
