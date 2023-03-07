@@ -48,9 +48,9 @@ To start, you must create a bot and pass it to the client. The bot is structured
 *   Bot with APIs
 
     ```ts
-    import { IBotData } from "@-anarchy-/chat";
+    import { IBotDataInput } from "@-anarchy-/chat";
     // A bot with APIs
-    const bot: IBotData = {
+    const bot: IBotDataInput = {
             name: "my-bot",
             openAIKey: "sk-MY_OPENAI_API_KEY",
             apis: [
@@ -61,12 +61,7 @@ To start, you must create a bot and pass it to the client. The bot is structured
                     params: [
                         {name: "userId", value: "the ID of the user", isValue: false}, // description
                         {name: "type", value: "inactive", isValue: true} // value
-                    ],
-                    jsonBody: [],
-                    dataBody: [],
-                    headers: [],
-                    authorization: [],
-                    cert: "",
+                    ]
                 }
             ],
         };
@@ -74,9 +69,9 @@ To start, you must create a bot and pass it to the client. The bot is structured
 *   Bot without APIs
 
     ```ts
-    import { IBotData } from "@-anarchy-/chat";
+    import { IBotDataInput } from "@-anarchy-/chat";
     // A bot without APIs. They can be added later
-    const bot: IBotData = {
+    const bot: IBotDataInput = {
             name: "my-bot",
             openAIKey: "sk-MY_OPENAI_API_KEY",
             apis: [],
@@ -95,24 +90,19 @@ client.setBot(bot);
 You can still add APIs to it after that:
 
 ```ts
-import { ChatDevClient, IBotApi } from "@-anarchy-/chat";
+import { ChatDevClient, IBotApiInput } from "@-anarchy-/chat";
 
 const client = new ChatDevClient("MY_SECRET_KEY");
 client.setBot(bot);
 
-const api: IBotApi = {
+const api: IBotApiInput = {
     description: "calculates the number of kittens in a given location",
     method: "GET",
     endpoint: "https://api.example.com/kitten-calculator",
     params: [
         {name: "place_name", value: "the place where we want to find the quantity of kittens", isValue: false}, // description
         {name: "distance_from_place_name", value: "20km", isValue: true} // value
-    ],
-    jsonBody: [],
-    dataBody: [],
-    headers: [],
-    authorization: [],
-    cert: ""
+    ]
 };
 
 client.setApi(api);
@@ -130,10 +120,10 @@ The `bot` and `api` will be validated when calling their respective `setBot()` a
 To avoid unexpected issues, we can validate the data before passing it to our client:
 
 ```ts
-import { ChatDevClient, IBotApi, IBotData, ZodValidationResult } from "@-anarchy-/chat";
+import { ChatDevClient, IBotApiInput, IBotDataInput, ZodValidationResult } from "@-anarchy-/chat";
 
 const client = new ChatDevClient("MY_SECRET_KEY");
-const bot: IBotData = { ... }
+const bot: IBotDataInput = { ... }
 const validateBot: ZodValidationResult<IBotData> = client.validateBot(bot);
 
 if (!validateBot.success) {
@@ -144,7 +134,7 @@ if (!validateBot.success) {
     client.setBot(bot);
 }
 
-const api: IBotApi = { ... };
+const api: IBotApiInput = { ... };
 
 const validateApi: ZodValidationResult<IBotApi> = client.validateApi(api);
 
@@ -164,10 +154,10 @@ client.setApi(api);
 The data is also validated when we set a Bot or add an API:
 
 ```ts
-import { ChatDevClient, IBotApi, IBotData, ZodValidationResult } from "@-anarchy-/chat";
+import { ChatDevClient, IBotDataInput, ZodValidationResult } from "@-anarchy-/chat";
 
 const client = new ChatDevClient("MY_SECRET_KEY");
-const bot: IBotData = { ... }
+const bot: IBotDataInput = { ... }
 
 const botAdded: ZodValidationResult<IBotData> = client.setBot(bot);
 
@@ -184,7 +174,7 @@ if (!botAdded.success) {
 Once a bot has been set, and we are happy with its data (check `client.getBot()` if you want to retrieve its value) we can start sending requests
 
 ```ts
-import { ChatDevClient, IBotApi, IBotData, ZodValidationResult, IInteractionConsumerResponse } from "@-anarchy-/chat";
+import { ChatDevClient, ZodValidationResult, IInteractionConsumerResponse } from "@-anarchy-/chat";
 
 const client = new ChatDevClient("MY_SECRET_KEY");
 client.setBot({ ... });
