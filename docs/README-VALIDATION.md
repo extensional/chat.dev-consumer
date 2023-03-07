@@ -3,7 +3,7 @@
 ## Here is an example of a full setup, where we validate the data manually.
 
 ```ts
-import { ChatDevClient, IBotApiInput, IBotDataInput } from "anarchy-chat";
+import { ChatDevClient, IBotApiInput, IBotDataInput } from "@-anarchy-/chat";
 
 (async function () {
 

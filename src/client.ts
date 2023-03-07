@@ -1,4 +1,23 @@
-import { BotApi, BotData, BotDataParameter, DEBUG_LEVEL, DebugLevelType, IBotApi, IBotApiInput, IBotData, IBotDataInput, IBotDataModel, IBotDataParameter, IBotDataParameterInput, IInteractionConsumerPrompt, IInteractionConsumerRequest, IInteractionConsumerResponse, ZodValidationResult, ZodValidator, createZodErrorObject } from "chat.dev-config";
+import {
+    BotApi,
+    BotData,
+    BotDataParameter,
+    DEBUG_LEVEL,
+    DebugLevelType,
+    IBotApi,
+    IBotApiInput,
+    IBotData,
+    IBotDataInput,
+    IBotDataModel,
+    IBotDataParameter,
+    IBotDataParameterInput,
+    IInteractionConsumerPrompt,
+    IInteractionConsumerRequest,
+    IInteractionConsumerResponse,
+    ZodValidationResult,
+    ZodValidator,
+    createZodErrorObject
+} from "@-anarchy-/config";
 import { clientErrors, config } from "./config";
 import { fetcher } from "./fetcher.function";
 
@@ -30,7 +49,7 @@ export class Client {
         if (!apiKey) {
             throw new Error(clientErrors.invalidKey)
         }
-        
+
         if (extra.debugUrl) {
             Client.baseUrl = extra.debugUrl;
         }
@@ -119,10 +138,10 @@ export class Client {
      * @param bot IBotData
      * @returns ZodValidationResult<IBotData>
     */
-   public validateBot = (bot: IBotDataInput): ZodValidationResult<IBotData> => {
-       return this.validateGeneric<IBotDataInput, IBotData>(bot, BotData);
+    public validateBot = (bot: IBotDataInput): ZodValidationResult<IBotData> => {
+        return this.validateGeneric<IBotDataInput, IBotData>(bot, BotData);
     }
-    
+
     /**
      * Validates that the given api is valid
      * @param bot IBotApi
@@ -131,7 +150,7 @@ export class Client {
     public validateApi = (botApi: IBotApiInput): ZodValidationResult<IBotApi> => {
         return this.validateGeneric<IBotApiInput, IBotApi>(botApi, BotApi);
     }
-    
+
     /**
      * Validates that the given param is valid
      * @param bot IBotDataParameter

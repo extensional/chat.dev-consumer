@@ -10,6 +10,6 @@ export {
     IBotDataParameter,
     ZodValidationResult,
     ZodErrorMapping
-} from "chat.dev-config";
+} from "@-anarchy-/config";
 
 export { Client as ChatDevClient } from "./client";
