@@ -1,4 +1,3 @@
-import axios, { AxiosResponse } from "axios";
 import { config } from "./config";
 
 interface RequestConfiguration {
@@ -25,17 +24,11 @@ export const fetcher = <T, BodyType = T>(
     url: string,
     body?: BodyType
 ): Promise<T> => {
-    return axios.request({
-        url,
+    return fetch(`${configuration.baseUrl ?? config.baseUrl}${url}`, {
         method,
-        baseURL: configuration.baseUrl ?? config.baseUrl,
         headers: defaultHeaders(configuration),
-        withCredentials: true,
-        validateStatus: function (status: number) {
-            return ![401, 400, 403, 500, 503, 422, 404].includes(status);
-        },
-        ...body ? { data: body } : {},
+        body: body ? JSON.stringify(body) : undefined,
     })
-        .then((r: AxiosResponse<T>) => r.data);
+        .then((r) => r.json());
 
 };

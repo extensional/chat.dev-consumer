@@ -48,8 +48,7 @@
         "typescript": "^4.9.5"
     },
     "dependencies": {
-        "@-anarchy-/config": "^1.0.0",
-        "axios": "^1.3.4"
+        "@-anarchy-/config": "^1.0.0"
     },
     "exports": {
         ".": {
