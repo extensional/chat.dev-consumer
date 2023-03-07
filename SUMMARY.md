@@ -3,7 +3,11 @@
 ## Docs
 
 * [Installation and usage](./README.md)    
-* [Getting the keys](./docs/README-GET-API-KEY.md)    
+* [Getting the keys](./docs/README-GET-API-KEY.md)
+
+    ### Examples
+    * [Validation](./README-VALIDATION.md)
+    * [No validation](./README-NO-VALIDATION.md)
 
 ## Extra info
 
