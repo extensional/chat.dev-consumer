@@ -1,6 +1,6 @@
 # Installation and usage
 
-[https://www.npmjs.com/package/anarchy-chat](https://www.npmjs.com/package/anarchy-chat)
+[https://www.npmjs.com/package/@-anarchy-/chat](https://www.npmjs.com/package/@-anarchy-/chat)
 
 ### A Promise-based Typescript-first consumer for [https://chat.dev](https://chat.dev)
 
