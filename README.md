@@ -13,8 +13,10 @@ The Consumer `ChatDevClient` is a javascript, promise-based, Typescript-first cl
 To install, run
 
 ```js
-npm install anarchy-chat
+npm install @-anarchy-/chat
 ```
+
+(comes bundled with Typescript!)
 
 ## Configuration
 
