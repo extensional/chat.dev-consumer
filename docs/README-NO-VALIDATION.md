@@ -17,8 +17,8 @@ import { ChatDevClient } from "@-anarchy-/chat";
                 method: "GET",
                 endpoint: "https://distance-calculator.example.com",
                 params: [
-                    {name: "from", value: "the place from where we leave", isValue: false},
-                    {name: "to", value: "the place we go to", isValue: false},
+                    {name: "from", value: "the place from where we leave", valueType: "description"},
+                    {name: "to", value: "the place we go to", valueType: "value"},
                 ],
             }
         ],

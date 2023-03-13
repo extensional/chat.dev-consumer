@@ -61,8 +61,8 @@ To start, you must create a bot and pass it to the client. The bot is structured
                     method: "GET",
                     endpoint: "https://api.example.com/v1",
                     params: [
-                        {name: "userId", value: "the ID of the user", isValue: false}, // description
-                        {name: "type", value: "inactive", isValue: true} // value
+                        {name: "userId", value: "the ID of the user", valueType: "description"},
+                        {name: "type", value: "inactive", valueType: "value"}
                     ]
                 }
             ],
@@ -102,8 +102,8 @@ const api: IBotApiInput = {
     method: "GET",
     endpoint: "https://api.example.com/kitten-calculator",
     params: [
-        {name: "place_name", value: "the place where we want to find the quantity of kittens", isValue: false}, // description
-        {name: "distance_from_place_name", value: "20km", isValue: true} // value
+        {name: "place_name", value: "the place where we want to find the quantity of kittens", valueType: "description"},
+        {name: "distance_from_place_name", value: "20km", valueType: "value"}
     ]
 };
 
@@ -214,5 +214,5 @@ The interaction history (i.e. the list of previous question/answer pairs) is aut
 | `setApi(api)`             | If valid, adds the API to the client. If invalid, returns the API's errors.          | `IBotApiInput`           | `ZodValidationResult <IBotApi>`           | `{description: "", endpoint: "https://..."}`                                                 |
 | `validateApi(api)`        | Validates a given API. No side effects                                               | `IBotApiInput`           | `ZodValidationResult <IBotApi>`           | `{description: "",  endpoint: "https://...",  params: [{name: "q", value: "search term"}] }` |
 | `getBot()`                | Returns the bot, if it's set, or throws an error.                                    |                          | `IBotData`                                |                                                                                              |
-| `validateParam(param)`    | Validates a given API's parameter  (headers, authentication, body, jsonBody, params) | `IBotDataParameterInput` | `ZodValidationResult <IBotDataParameter>` | `{"name": "q", value: "search term", isValue: false}`                                        |
+| `validateParam(param)`    | Validates a given API's parameter  (headers, authentication, body, jsonBody, params) | `IBotDataParameterInput` | `ZodValidationResult <IBotDataParameter>` | `{"name": "q", value: "search term", valueType: "description"}`                                        |
 | `sendInteraction(prompt)` | Sends an interaction to the server and returns the answer                            | `string`                 | `Promise <IInteractionConsumerResponse>`  | `"How many kittens are there in Paris?"`                                                     |
