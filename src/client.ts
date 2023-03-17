@@ -2,7 +2,6 @@ import {
     BotApi,
     BotData,
     BotDataParameter,
-    DEBUG_LEVEL,
     DebugLevelType,
     IBotApi,
     IBotApiInput,
@@ -22,7 +21,8 @@ import { clientErrors, config } from "./config";
 import { fetcher } from "./fetcher.function";
 
 type ExtraArgsType = any | {
-    debugUrl?: string; // for debugging purposes
+    url?: string; // for debugging purposes
+    level?: DebugLevelType; // defaults to 0
 }
 
 export class Client {
@@ -42,7 +42,7 @@ export class Client {
      * @param apiKey string
      * @param debugLevel DebugLevelType
      */
-    constructor(apiKey: string = Client.apiKey, debugLevel: DebugLevelType = DEBUG_LEVEL.NO, extra: ExtraArgsType = {}) {
+    constructor(apiKey: string = Client.apiKey, extra: ExtraArgsType = {}) {
         if (apiKey) {
             Client.apiKey = apiKey;
         }
