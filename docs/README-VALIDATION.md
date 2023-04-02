@@ -10,7 +10,7 @@ import { ChatDevClient, IBotApiInput, IBotDataInput } from "@-anarchy-/chat";
     const botClient = new ChatDevClient("cd-sk-ABCDEFabcdef0123456789");
     const myBot: IBotDataInput = { 
         name: "randomuser bot",
-        openAIKey: "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"
+        llmKey: "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"
     };
     const validation = botClient.validateBot(myBot);
 

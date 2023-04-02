@@ -54,7 +54,7 @@ To start, you must create a bot and pass it to the client. The bot is structured
     // A bot with APIs
     const bot: IBotDataInput = {
             name: "my-bot",
-            openAIKey: "sk-MY_OPENAI_API_KEY",
+            llmKey: "sk-MY_OPENAI_API_KEY",
             apis: [
                 {
                     description: "this api gets examples from the internet", // required for the bot to understand when to use this api!
@@ -75,7 +75,7 @@ To start, you must create a bot and pass it to the client. The bot is structured
     // A bot without APIs. They can be added later
     const bot: IBotDataInput = {
             name: "my-bot",
-            openAIKey: "sk-MY_OPENAI_API_KEY",
+            llmKey: "sk-MY_OPENAI_API_KEY",
             apis: [],
         };
     ```
@@ -209,8 +209,8 @@ The interaction history (i.e. the list of previous question/answer pairs) is aut
 | Function name             |                                                                                      | given type               | return type                               | example argument                                                                             |
 |---------------------------|--------------------------------------------------------------------------------------|--------------------------|-------------------------------------------|----------------------------------------------------------------------------------------------|
 | `static init(KEY)`        | sets the key globally for all instances                                              | `string`                 |                                           |                                                                                              |
-| `setBot(bot)`             | If valid, sets the Bot in the client. If invalid, returns the Bot's errors.          | `IBotDataInput`          | `ZodValidationResult <IBotData>`          | `{name: "", openAIKey: "sk-...", apis: []}`                                                  |
-| `validateBot(bot)`        | Validates a given Bot. No side effects                                               | `IBotDataInput`          | `ZodValidationResult <IBotData>`          | `{name: "", openAIKey: "sk-..."}`                                                            |
+| `setBot(bot)`             | If valid, sets the Bot in the client. If invalid, returns the Bot's errors.          | `IBotDataInput`          | `ZodValidationResult <IBotData>`          | `{name: "", llmKey: "sk-...", apis: []}`                                                  |
+| `validateBot(bot)`        | Validates a given Bot. No side effects                                               | `IBotDataInput`          | `ZodValidationResult <IBotData>`          | `{name: "", llmKey: "sk-..."}`                                                            |
 | `setApi(api)`             | If valid, adds the API to the client. If invalid, returns the API's errors.          | `IBotApiInput`           | `ZodValidationResult <IBotApi>`           | `{description: "", endpoint: "https://..."}`                                                 |
 | `validateApi(api)`        | Validates a given API. No side effects                                               | `IBotApiInput`           | `ZodValidationResult <IBotApi>`           | `{description: "",  endpoint: "https://...",  params: [{name: "q", value: "search term"}] }` |
 | `getBot()`                | Returns the bot, if it's set, or throws an error.                                    |                          | `IBotData`                                |                                                                                              |

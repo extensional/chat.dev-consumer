@@ -10,7 +10,7 @@ import { ChatDevClient } from "@-anarchy-/chat";
     const botClient = new ChatDevClient("cd-sk-ABCDEFabcdef0123456789");
     botClient.setBot({
         name: "distance bot",
-        openAIKey: "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",
+        llmKey: "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",
         apis: [
             {
                 description: "retrieves distance and weather information between places",
